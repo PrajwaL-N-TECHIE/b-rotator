@@ -276,22 +276,19 @@
           <span class="badge-count" id="history-count-badge">0 Won</span>
         </div>
 
-        <!-- Latest Winner Podium Card -->
+        <!-- Latest Winner Podium Card (Buildicy 3D Spotlight) -->
         <div class="podium-card" id="podium-card">
           <div class="podium-trophy">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-              <path d="M4 22h16" />
-              <path d="M10 14.66V17c0 .55-.45 1-1 1H7v2h10v-2h-2c-.55 0-1-.45-1-1v-2.34" />
-              <path d="M6 4h12v7a6 6 0 0 1-12 0V4z" />
-            </svg>
+            <img src="logo.png" alt="Buildicy Official Logo" class="podium-logo-img">
           </div>
           <div class="podium-details">
             <span class="podium-subtitle">LATEST SELECTED CANDIDATE</span>
             <h3 class="podium-name" id="podium-winner-name">No Winner Yet</h3>
             <p class="podium-time" id="podium-winner-time">Spin the wheel to choose a student</p>
           </div>
+          <button id="podium-copy-btn" class="podium-copy-btn hidden" title="Copy Winner Name" aria-label="Copy Winner Name">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
         </div>
 
         <!-- Odds Probability Calculator -->
@@ -337,7 +334,7 @@
       <div class="modal-banner-glow" aria-hidden="true"></div>
       
       <div class="trophy-crest">
-        <!-- Buildicy 3D Logo Crest -->
+        <!-- Buildicy 3D Official Logo Crest -->
         <img src="logo.png" alt="Buildicy Winner" class="modal-crest-logo">
       </div>
 
@@ -350,19 +347,22 @@
         <span id="winner-meta-time">Just now</span>
       </div>
 
-      <!-- Action Buttons -->
+      <!-- Action Buttons (Refined Premium Grid) -->
       <div class="modal-actions-grid">
         <button id="winner-remove-btn" class="dialog-btn primary-pulse" autofocus>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-          Remove from Pool & Spin Next
+          <span>Remove from Pool & Spin Next</span>
         </button>
-        <button id="winner-keep-btn" class="dialog-btn secondary">
-          Keep in Pool & Spin Again
-        </button>
-        <button id="winner-copy-btn" class="dialog-btn tertiary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copy Name
-        </button>
+        <div class="modal-btn-row">
+          <button id="winner-keep-btn" class="dialog-btn secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            <span>Keep in Pool</span>
+          </button>
+          <button id="winner-copy-btn" class="dialog-btn copy-btn">
+            <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span class="copy-btn-text">Copy Name</span>
+          </button>
+        </div>
       </div>
 
       <button id="close-winner-dialog-btn" class="modal-close-icon" aria-label="Close dialog">

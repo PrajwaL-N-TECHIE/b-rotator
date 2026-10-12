@@ -179,16 +179,43 @@ class StudentWheelApp {
       this.closeModal(this.winnerModal);
     });
 
-    document.getElementById('winner-copy-btn').addEventListener('click', () => {
-      if (this.currentWinner) {
-        navigator.clipboard.writeText(this.currentWinner);
-        const btn = document.getElementById('winner-copy-btn');
-        btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
-        setTimeout(() => {
-          btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Name`;
-        }, 1800);
-      }
-    });
+    // Winner Copy button
+    const winnerCopyBtn = document.getElementById('winner-copy-btn');
+    if (winnerCopyBtn) {
+      winnerCopyBtn.addEventListener('click', () => {
+        if (this.currentWinner) {
+          navigator.clipboard.writeText(this.currentWinner).catch(() => {});
+          winnerCopyBtn.classList.add('copied');
+          winnerCopyBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="copy-btn-text">Copied!</span>
+          `;
+          this.showToast(`Copied "${this.currentWinner}" to clipboard`);
+          setTimeout(() => {
+            winnerCopyBtn.classList.remove('copied');
+            winnerCopyBtn.innerHTML = `
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span class="copy-btn-text">Copy Name</span>
+            `;
+          }, 1800);
+        }
+      });
+    }
+
+    // Winner Spotlight (Podium) Copy button
+    const podiumCopyBtn = document.getElementById('podium-copy-btn');
+    if (podiumCopyBtn) {
+      podiumCopyBtn.addEventListener('click', () => {
+        if (this.currentWinner) {
+          navigator.clipboard.writeText(this.currentWinner).catch(() => {});
+          podiumCopyBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>`;
+          this.showToast(`Copied "${this.currentWinner}" to clipboard`);
+          setTimeout(() => {
+            podiumCopyBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+          }, 1800);
+        }
+      });
+    }
 
     document.getElementById('close-winner-dialog-btn').addEventListener('click', () => {
       this.closeModal(this.winnerModal);
@@ -349,6 +376,11 @@ class StudentWheelApp {
     this.podiumName.textContent = winner;
     this.podiumTime.textContent = `Round #${this.roundsCount} at ${timeStr}`;
 
+    const podiumCard = document.getElementById('podium-card');
+    if (podiumCard) podiumCard.classList.add('has-winner');
+    const podiumCopy = document.getElementById('podium-copy-btn');
+    if (podiumCopy) podiumCopy.classList.remove('hidden');
+
     document.getElementById('winner-modal-title').textContent = winner;
     document.getElementById('winner-meta-index').textContent = `Rank #${index + 1} of ${this.activeCandidates.length} students`;
     document.getElementById('winner-meta-time').textContent = timeStr;
@@ -356,11 +388,20 @@ class StudentWheelApp {
     this.updateStats();
     this.renderHistory();
 
-    if (this.autoRemoveCheckbox.checked) {
-      document.getElementById('winner-remove-btn').textContent = 'Winner Auto-Removed (Click to Spin Next)';
-      this.removeCandidateFromPool(winner, false);
-    } else {
-      document.getElementById('winner-remove-btn').textContent = 'Remove from Pool & Spin Next';
+    const removeBtn = document.getElementById('winner-remove-btn');
+    if (removeBtn) {
+      if (this.autoRemoveCheckbox.checked) {
+        removeBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Winner Auto-Removed (Click to Spin Next)</span>
+        `;
+        this.removeCandidateFromPool(winner, false);
+      } else {
+        removeBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Remove from Pool & Spin Next</span>
+        `;
+      }
     }
 
     this.openModal(this.winnerModal);

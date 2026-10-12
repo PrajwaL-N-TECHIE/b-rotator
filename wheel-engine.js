@@ -37,6 +37,13 @@ export class WheelEngine {
     this.dpr = Math.min(2, window.devicePixelRatio || 1);
     this.setupCanvas();
 
+    // Official Buildicy Tiered 3D Emblem Image
+    this.logoImg = new Image();
+    this.logoImg.src = 'logo.png';
+    this.logoImg.onload = () => {
+      this.render();
+    };
+
     // Sound FX Synth (B-Forms Acoustic Module)
     this.audioEngine = new WheelAudioEngine();
 
@@ -469,49 +476,54 @@ export class WheelEngine {
     ctx.fillStyle = coreGrad;
     ctx.fill();
 
-    // DRAW THE EXACT BUILDICY 3D LAYERED RHOMBUS LOGO INSIDE HUB
-    const logoScale = (hubRadius * 0.6) / 36;
-    ctx.save();
-    ctx.translate(cx, cy - 2);
-    ctx.scale(logoScale, logoScale);
+    // DRAW THE EXACT BUILDICY 3D TIERED LOGO INSIDE HUB
+    if (this.logoImg && this.logoImg.complete && this.logoImg.naturalWidth > 0) {
+      const imgSize = hubRadius * 0.95;
+      ctx.drawImage(this.logoImg, cx - imgSize / 2, cy - imgSize / 2 - 3, imgSize, imgSize);
+    } else {
+      const logoScale = (hubRadius * 0.6) / 36;
+      ctx.save();
+      ctx.translate(cx, cy - 2);
+      ctx.scale(logoScale, logoScale);
 
-    // Layer 1 (Bottom deep purple #5b21b6): M8 54 L34 68 L60 54 L34 40 Z
-    ctx.beginPath();
-    ctx.moveTo(8 - 34, 54 - 38);
-    ctx.lineTo(34 - 34, 68 - 38);
-    ctx.lineTo(60 - 34, 54 - 38);
-    ctx.lineTo(34 - 34, 40 - 38);
-    ctx.closePath();
-    ctx.fillStyle = '#5b21b6';
-    ctx.fill();
+      // Layer 1 (Bottom deep purple #5b21b6): M8 54 L34 68 L60 54 L34 40 Z
+      ctx.beginPath();
+      ctx.moveTo(8 - 34, 54 - 38);
+      ctx.lineTo(34 - 34, 68 - 38);
+      ctx.lineTo(60 - 34, 54 - 38);
+      ctx.lineTo(34 - 34, 40 - 38);
+      ctx.closePath();
+      ctx.fillStyle = '#5b21b6';
+      ctx.fill();
 
-    // Layer 2 (Middle electric violet #7c3aed): M14 36 L34 46 L54 36 L34 26 Z
-    ctx.beginPath();
-    ctx.moveTo(14 - 34, 36 - 38);
-    ctx.lineTo(34 - 34, 46 - 38);
-    ctx.lineTo(54 - 34, 36 - 38);
-    ctx.lineTo(34 - 34, 26 - 38);
-    ctx.closePath();
-    ctx.fillStyle = '#7c3aed';
-    ctx.fill();
+      // Layer 2 (Middle electric violet #7c3aed): M14 36 L34 46 L54 36 L34 26 Z
+      ctx.beginPath();
+      ctx.moveTo(14 - 34, 36 - 38);
+      ctx.lineTo(34 - 34, 46 - 38);
+      ctx.lineTo(54 - 34, 36 - 38);
+      ctx.lineTo(34 - 34, 26 - 38);
+      ctx.closePath();
+      ctx.fillStyle = '#7c3aed';
+      ctx.fill();
 
-    // Layer 3 (Top lavender #c084fc): M20 15.5 L34 22.5 L48 15.5 L34 8.5 Z
-    ctx.beginPath();
-    ctx.moveTo(20 - 34, 15.5 - 38);
-    ctx.lineTo(34 - 34, 22.5 - 38);
-    ctx.lineTo(48 - 34, 15.5 - 38);
-    ctx.lineTo(34 - 34, 8.5 - 38);
-    ctx.closePath();
-    ctx.fillStyle = '#c084fc';
-    ctx.fill();
+      // Layer 3 (Top lavender #c084fc): M20 15.5 L34 22.5 L48 15.5 L34 8.5 Z
+      ctx.beginPath();
+      ctx.moveTo(20 - 34, 15.5 - 38);
+      ctx.lineTo(34 - 34, 22.5 - 38);
+      ctx.lineTo(48 - 34, 15.5 - 38);
+      ctx.lineTo(34 - 34, 8.5 - 38);
+      ctx.closePath();
+      ctx.fillStyle = '#c084fc';
+      ctx.fill();
 
-    // Top dot (White circle at cx: 34, cy: 8.5, r: 3.5)
-    ctx.beginPath();
-    ctx.arc(34 - 34, 8.5 - 38, 3.5, 0, 2 * Math.PI);
-    ctx.fillStyle = '#ffffff';
-    ctx.fill();
+      // Top dot (White circle at cx: 34, cy: 8.5, r: 3.5)
+      ctx.beginPath();
+      ctx.arc(34 - 34, 8.5 - 38, 3.5, 0, 2 * Math.PI);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
 
-    ctx.restore();
+      ctx.restore();
+    }
 
     // Subtext below logo
     ctx.fillStyle = isLight ? '#6d28d9' : '#c084fc';
@@ -599,15 +611,21 @@ export class WheelEngine {
     ctx.stroke();
     ctx.setLineDash([]);
 
+    if (this.logoImg && this.logoImg.complete && this.logoImg.naturalWidth > 0) {
+      const logoW = 56;
+      const logoH = 56;
+      ctx.drawImage(this.logoImg, cx - logoW / 2, cy - 65, logoW, logoH);
+    }
+
     ctx.fillStyle = isLight ? '#475569' : '#94a3b8';
     ctx.font = '500 15px "Plus Jakarta Sans", sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('Upload or paste student roster to begin', cx, cy - 10);
+    ctx.fillText('Upload or paste student roster to begin', cx, cy + 8);
 
     ctx.fillStyle = isLight ? '#7c3aed' : '#c084fc';
     ctx.font = '700 13px "Syne", sans-serif';
-    ctx.fillText('SUPPORTS 500 - 1000 CANDIDATES', cx, cy + 16);
+    ctx.fillText('SUPPORTS 500 - 1000 CANDIDATES', cx, cy + 34);
   }
 
   truncateText(ctx, text, maxWidth) {
