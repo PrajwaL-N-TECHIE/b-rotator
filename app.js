@@ -741,6 +741,15 @@ class StudentWheelApp {
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  window.app = new StudentWheelApp();
-});
+// Ensure execution only runs in browser DOM environment
+if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', () => {
+      window.app = new StudentWheelApp();
+    });
+  } else {
+    window.app = new StudentWheelApp();
+  }
+}
+
+export { StudentWheelApp };
