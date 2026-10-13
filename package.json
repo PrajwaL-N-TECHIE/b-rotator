@@ -4,8 +4,7 @@
   "type": "module",
   "description": "B-Rotator • Candidate & Student Wheel Engine with Live Analytics (Buildicy)",
   "scripts": {
-    "dev": "node server.js",
-    "build": "echo 'Static build ready'"
+    "dev": "node server.js"
   },
   "keywords": [
     "wheel",
