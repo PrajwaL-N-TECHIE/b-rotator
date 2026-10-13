@@ -2,9 +2,12 @@
   "name": "b-rotator",
   "version": "1.0.0",
   "type": "module",
+  "main": "app.mjs",
   "description": "B-Rotator • Candidate & Student Wheel Engine with Live Analytics (Buildicy)",
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "echo 'Static build ready'"
   },
   "keywords": [
     "wheel",

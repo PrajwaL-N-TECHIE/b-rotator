@@ -41,6 +41,10 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Wheel Rotator running at http://localhost:${PORT}/`);
-});
+if (process.env.NODE_ENV !== 'production' || process.argv[1]?.includes('server.js')) {
+  server.listen(PORT, () => {
+    console.log(`Wheel Rotator running at http://localhost:${PORT}/`);
+  });
+}
+
+export default server;
